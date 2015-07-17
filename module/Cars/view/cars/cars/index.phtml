@@ -1,3 +1,11 @@
+<table>
+<tr><td>
+<div style="float:left; padding-right:16px;"><?php echo $this->gravatar($this->zfcUserIdentity()->getEmail()) ?></div>
+<h3><?php echo $this->translate('Hello'); ?>, <?php echo $this->zfcUserDisplayName() ?>!</h3>
+<a href="<?php echo $this->url('zfcuser/logout') ?>">[<?php echo $this->translate('Sign Out'); ?>]</a>
+<div style="clear:both;"></div>
+</td>
+<tr><td>
 <div style="background: white; border: 3px solid silver; padding: 5px; text-align: center; width: 1024px;">
 <marquee height="500"  scrollamount="5" width="1000">
 <img src="img/1.jpg" height="80%" width="80%"/>
@@ -36,7 +44,9 @@
 <img src="img/2.jpg" height="80%" width="80%"/>
 <img src="img/3.jpg" height="80%" width="80%"/>
 <img src="img/4.jpg" height="80%" width="80%"/></marquee></div>
+</td></tr>
 
+</table>
 <?php
 // module/Album/view/album/album/index.phtml:
 
