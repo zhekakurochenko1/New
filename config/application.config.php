@@ -15,6 +15,7 @@ return array(
 		'DoctrineModule',
         'DoctrineORMModule',
         'ZfcUserDoctrineORM',
+		'ZendDeveloperTools',
 		
     ),
 
