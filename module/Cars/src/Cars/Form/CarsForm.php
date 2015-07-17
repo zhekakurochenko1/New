@@ -26,10 +26,11 @@ class CarsForm extends Form
                 'label' => 'Artist',
             ),
         ));
+		
         $this->add(array(
             'name' => 'title',
             'attributes' => array(
-                'type'  => 'warchar',
+                'type'  => 'file',
             ),
             'options' => array(
                 'label' => 'Title',
