@@ -1,0 +1,70 @@
+<div style="background: white; border: 3px solid silver; padding: 5px; text-align: center; width: 1024px;">
+<marquee height="500"  scrollamount="5" width="1000">
+<img src="img/1.jpg" height="80%" width="80%"/>
+<img src="img/2.jpg" height="80%" width="80%"/>
+<img src="img/3.jpg" height="80%" width="80%"/>
+<img src="img/4.jpg" height="80%" width="80%"/>
+<img src="img/1.jpg" height="80%" width="80%"/>
+<img src="img/2.jpg" height="80%" width="80%"/>
+<img src="img/3.jpg" height="80%" width="80%"/>
+<img src="img/4.jpg" height="80%" width="80%"/>
+<img src="img/1.jpg" height="80%" width="80%"/>
+<img src="img/2.jpg" height="80%" width="80%"/>
+<img src="img/3.jpg" height="80%" width="80%"/>
+<img src="img/4.jpg" height="80%" width="80%"/>
+<img src="img/1.jpg" height="80%" width="80%"/>
+<img src="img/2.jpg" height="80%" width="80%"/>
+<img src="img/3.jpg" height="80%" width="80%"/>
+<img src="img/4.jpg" height="80%" width="80%"/>
+<img src="img/1.jpg" height="80%" width="80%"/>
+<img src="img/2.jpg" height="80%" width="80%"/>
+<img src="img/3.jpg" height="80%" width="80%"/>
+<img src="img/4.jpg" height="80%" width="80%"/>
+<img src="img/1.jpg" height="80%" width="80%"/>
+<img src="img/2.jpg" height="80%" width="80%"/>
+<img src="img/3.jpg" height="80%" width="80%"/>
+<img src="img/4.jpg" height="80%" width="80%"/>
+<img src="img/1.jpg" height="80%" width="80%"/>
+<img src="img/2.jpg" height="80%" width="80%"/>
+<img src="img/3.jpg" height="80%" width="80%"/>
+<img src="img/4.jpg" height="80%" width="80%"/>
+<img src="img/1.jpg" height="80%" width="80%"/>
+<img src="img/2.jpg" height="80%" width="80%"/>
+<img src="img/3.jpg" height="80%" width="80%"/>
+<img src="img/4.jpg" height="80%" width="80%"/>
+<img src="img/1.jpg" height="80%" width="80%"/>
+<img src="img/2.jpg" height="80%" width="80%"/>
+<img src="img/3.jpg" height="80%" width="80%"/>
+<img src="img/4.jpg" height="80%" width="80%"/></marquee></div>
+
+<?php
+// module/Album/view/album/album/index.phtml:
+
+$title = 'My cars';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+    <a href="<?php echo $this->url('cars', array('action'=>'add'));?>">Add new car</a>
+	<p><a href="/user">Back to login</a></p> 
+</p>
+
+<table class="table">
+<tr>
+	<th>Photo</th>
+    <th>Model</th>
+    <th>&nbsp;</th>
+</tr>
+<?php foreach ($carss as $cars) : ?>
+<tr>
+	<td><?php echo "<img src='/img/" . $this->escapeHtml($cars->title) . "' />";?></td>
+    <td><?php echo $this->escapeHtml($cars->artist);?></td>
+    <td>
+        <a href="<?php echo $this->url('cars',
+            array('action'=>'edit', 'id' => $cars->id));?>">Edit</a>
+        <a href="<?php echo $this->url('cars',
+            array('action'=>'delete', 'id' => $cars->id));?>">Delete</a>
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>
