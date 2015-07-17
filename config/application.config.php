@@ -10,6 +10,11 @@ return array(
     'modules' => array(
         'Application',
 		'Cars',
+		 'ZfcBase',
+        'ZfcUser',
+		'DoctrineModule',
+        'DoctrineORMModule',
+        'ZfcUserDoctrineORM',
 		
     ),
 
