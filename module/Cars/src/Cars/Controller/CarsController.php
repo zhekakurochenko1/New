@@ -13,6 +13,7 @@ class CarsController extends AbstractActionController
     public function indexAction()
     {
         return new ViewModel(array(
+            
             'carss' => $this->getCarsTable()->fetchAll(),
         ));
     }

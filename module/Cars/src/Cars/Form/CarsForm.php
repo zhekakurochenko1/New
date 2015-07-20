@@ -23,7 +23,7 @@ class CarsForm extends Form
                 'type'  => 'text',
             ),
             'options' => array(
-                'label' => 'Artist',
+                'label' => 'Name_cars',
             ),
         ));
 		
@@ -33,7 +33,7 @@ class CarsForm extends Form
                 'type'  => 'file',
             ),
             'options' => array(
-                'label' => 'Title',
+                'label' => 'File',
             ),
         ));
         $this->add(array(
