@@ -13,7 +13,7 @@ class CarsController extends AbstractActionController
     public function indexAction()
     {
         return new ViewModel(array(
-            
+            'role' => $this->zfcUserAuthentication()->getIdentity()->getRole(),
             'carss' => $this->getCarsTable()->fetchAll(),
         ));
     }
