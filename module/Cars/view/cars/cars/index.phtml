@@ -43,11 +43,12 @@
 
 </table>
 
-<?php if($role == 'admin') { ?>
+<?php if($this->zfcUserIdentity()) { ?>
+    <p><h3><?php echo $this->translate('Hello'); ?>, <?php echo $this->zfcUserDisplayName() ?>!</h3></p>
+    <a href="<?php echo $this->url('zfcuser/logout') ?>">[<?php echo $this->translate('Sign Out'); ?>]</a>
+    <div style="clear:both;"></div>
 
-<p><h3><?php echo $this->translate('Hello'); ?>, <?php echo $this->zfcUserDisplayName() ?>!</h3></p>
-<a href="<?php echo $this->url('zfcuser/logout') ?>">[<?php echo $this->translate('Sign Out'); ?>]</a>
-<div style="clear:both;"></div>
+<?php } else { echo $this->zfcUserLoginWidget(); } ?>
 <?php
 // module/Album/view/album/album/index.phtml:
 
@@ -55,65 +56,36 @@ $title = 'My cars';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php if($this->zfcUserIdentity() && $this->zfcUserIdentity()->getRole() == 'admin') { ?>
 <p>
     <a href="<?php echo $this->url('cars', array('action'=>'add'));?>">Add new car</a>
     <p><a href="/user">Back to login</a></p> 
 </p>
-
-<table class="table">
-<tr>
-    <th>Photo</th>
-    <th>Model</th>
-    <th>&nbsp;</th>
-</tr>
-<?php foreach ($carss as $cars) : ?>
-<tr>
-    <td><?php echo "<img src='/img/" . $this->escapeHtml($cars->title) . "' />";?></td>
-    <td><?php echo $this->escapeHtml($cars->artist);?></td>
-    <td>
-        <a href="<?php echo $this->url('cars',
-            array('action'=>'edit', 'id' => $cars->id));?>">Edit</a>
-        <a href="<?php echo $this->url('cars',
-            array('action'=>'delete', 'id' => $cars->id));?>">Delete</a>
-    </td>
-</tr>
-<?php endforeach; ?>
-</table>
-
-<?php } else { ?>   
-<p><h3><?php echo $this->translate('Hello'); ?>, <?php echo $this->zfcUserDisplayName() ?>!</h3></p>
-<a href="<?php echo $this->url('zfcuser/logout') ?>">[<?php echo $this->translate('Sign Out'); ?>]</a>
-<div style="clear:both;"></div> 
-<?php
-
-
-$title = 'My cars';
-$this->headTitle($title);
-?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
-<p>
-    
-     
-</p>
-
-<table class="table">
-<tr>
-    <th>Photo</th>
-    <th>Model</th>
-    <th>&nbsp;</th>
-</tr>
-<?php foreach ($carss as $cars) : ?>
-<tr>
-    <td><?php echo "<img src='/img/" . $this->escapeHtml($cars->title) . "' />";?></td>
-    <td><?php echo $this->escapeHtml($cars->artist);?></td>
-    <td>
-        
-    </td>
-</tr>
-<?php endforeach; ?>
-</table>
-
 <?php } ?>
+
+<table class="table">
+<tr>
+    <th>Photo</th>
+    <th>Model</th>
+    <th>&nbsp;</th>
+</tr>
+<?php foreach ($carss as $cars) : ?>
+<tr>
+    <td><?php echo "<img src='/img/" . $this->escapeHtml($cars->title) . "' />";?></td>
+    <td><?php echo $this->escapeHtml($cars->artist);?></td>
+
+    <?php if($this->zfcUserIdentity() && $this->zfcUserIdentity()->getRole() == 'admin') { ?>
+        <td>
+            <a href="<?php echo $this->url('cars',
+                array('action'=>'edit', 'id' => $cars->id));?>">Edit</a>
+            <a href="<?php echo $this->url('cars',
+                array('action'=>'delete', 'id' => $cars->id));?>">Delete</a>
+        </td>
+    <?php } ?>
+</tr>
+<?php endforeach; ?>
+</table>
 
 
 

@@ -18,8 +18,10 @@ $url = $this->url('cars', array(
 ?>
 <form action="<?php echo $url; ?>" method="post">
 <div>
+	<?php if($this->zfcUserIdentity() && $this->zfcUserIdentity()->getRole() == 'admin') { ?>
     <input type="hidden" name="id" value="<?php echo (int) $cars->id; ?>" />
     <input type="submit" name="del" value="Yes" />
     <input type="submit" name="del" value="No" />
+    <?php } ?>
 </div>
 </form>

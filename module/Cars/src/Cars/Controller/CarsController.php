@@ -13,35 +13,41 @@ class CarsController extends AbstractActionController
     public function indexAction()
     {
         return new ViewModel(array(
-            'role' => $this->zfcUserAuthentication()->getIdentity()->getRole(),
+        //    'role' => $this->zfcUserAuthentication()->getIdentity()->getRole(),
             'carss' => $this->getCarsTable()->fetchAll(),
         ));
     }
 
     public function addAction()
     {
-        $form = new CarsForm();
-        $form->get('submit')->setValue('Add');
+        if ($this->zfcUserAuthentication()->hasIdentity() && $this->zfcUserAuthentication()->getIdentity()->getRole() == "admin") {
+            $form = new CarsForm();
+            $form->get('submit')->setValue('Add');
 
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $cars = new Cars();
-            $form->setInputFilter($cars->getInputFilter());
-            $form->setData($request->getPost());
+            $request = $this->getRequest();
+            if ($request->isPost()) {
+                $cars = new Cars();
+                $form->setInputFilter($cars->getInputFilter());
+                $form->setData($request->getPost());
 
-            if ($form->isValid()) {
-                $cars->exchangeArray($form->getData());
-                $this->getCarsTable()->saveCars($cars);
+                if ($form->isValid()) {
+                    $cars->exchangeArray($form->getData());
+                    $this->getCarsTable()->saveCars($cars);
 
-                // Redirect to list of albums
-                return $this->redirect()->toRoute('cars');
+                    // Redirect to list of albums
+                    return $this->redirect()->toRoute('cars');
+                }
             }
+            return array('form' => $form);
+        } else {
+              echo "ERROR!!!! You not admin";
+            
         }
-        return array('form' => $form);
     }
 
     public function editAction()
     {
+        if ($this->zfcUserAuthentication()->hasIdentity() && $this->zfcUserAuthentication()->getIdentity()->getRole() == "admin") {
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
             return $this->redirect()->toRoute('cars', array(
@@ -65,6 +71,10 @@ class CarsController extends AbstractActionController
                 // Redirect to list of albums
                 return $this->redirect()->toRoute('cars');
             }
+        } 
+
+        } else {
+            echo 'ERROR!!!!';
         }
 
         return array(
@@ -75,6 +85,7 @@ class CarsController extends AbstractActionController
 
     public function deleteAction()
     {
+        if ($this->zfcUserAuthentication()->hasIdentity() && $this->zfcUserAuthentication()->getIdentity()->getRole() == "admin") {
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
             return $this->redirect()->toRoute('cars');
@@ -98,7 +109,7 @@ class CarsController extends AbstractActionController
             'cars' => $this->getCarsTable()->getCars($id)
         );
     }
-
+}
     public function getCarsTable()
     {
         if (!$this->carsTable) {
