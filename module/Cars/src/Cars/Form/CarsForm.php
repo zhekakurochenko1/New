@@ -11,6 +11,9 @@ class CarsForm extends Form
         // we want to ignore the name passed
         parent::__construct('cars');
         $this->setAttribute('method', 'post');
+        $this->setAttribute('onsubmit', 'return SendFile()' );
+
+
         $this->add(array(
             'name' => 'id',
             'attributes' => array(
@@ -31,6 +34,8 @@ class CarsForm extends Form
             'name' => 'title',
             'attributes' => array(
                 'type'  => 'file',
+                'id' => 'title'
+                 //'multiple' => 'true',
             ),
             'options' => array(
                 'label' => 'File',

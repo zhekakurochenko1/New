@@ -1,4 +1,4 @@
-use Zend\Form\Element;
+<? php use Zend\Form\Element;
 use Zend\Form\Form;
 
 class UploadForm extends Form
@@ -17,4 +17,4 @@ class UploadForm extends Form
              ->setAttribute('id', 'image-file');
         $this->add($file);
     }
-}
+} 

@@ -23,18 +23,30 @@ class CarsController extends AbstractActionController
         if ($this->zfcUserAuthentication()->hasIdentity() && $this->zfcUserAuthentication()->getIdentity()->getRole() == "admin") {
             $form = new CarsForm();
             $form->get('submit')->setValue('Add');
-
             $request = $this->getRequest();
-            if ($request->isPost()) {
+                if ($request->isPost()) {
                 $cars = new Cars();
                 $form->setInputFilter($cars->getInputFilter());
                 $form->setData($request->getPost());
-
+               
                 if ($form->isValid()) {
-                    $cars->exchangeArray($form->getData());
+                    $cars->exchangeArray($form->getData());                 
                     $this->getCarsTable()->saveCars($cars);
+                    $adapter = new \Zend\File\Transfer\Adapter\Http();
+                    $dir = getcwd(). '/public/img';
+                    $data = $form->getData();
+                    $filename = $data['title'];
+                    $fileTlsName = $dir.$filename;// rabotaet
+                    $adapter->addFilter('Rename', $fileTlsName);// rename file
+                    if ($adapter->receive($fileTlsName))
+                       {                                     // upload file
+                        return true; }
+                        // var_dump($adapter->receive($fileTlsName)); die;
 
-                    // Redirect to list of albums
+                   
+
+
+                    // Redirect to list of cars
                     return $this->redirect()->toRoute('cars');
                 }
             }

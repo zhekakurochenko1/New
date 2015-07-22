@@ -11,5 +11,11 @@ $form->setAttribute('action', $this->url('cars', array('action' => 'add')));
 $form->prepare();
 
 echo $this->form()->openTag($form);
+
+//echo $this->formRow($Form->get('title'));  
+
+//echo $this->formSubmit($Form->get('submit'));
+
 echo $this->formCollection($form);
+//var_dump(formCollection($form)); die;
 echo $this->form()->closeTag();
