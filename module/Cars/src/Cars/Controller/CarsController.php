@@ -5,6 +5,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Cars\Model\Cars;
 use Cars\Form\CarsForm;
+use Zend\Validator;
 
 class CarsController extends AbstractActionController
 {
@@ -20,33 +21,44 @@ class CarsController extends AbstractActionController
 
     public function addAction()
     {
-        if ($this->zfcUserAuthentication()->hasIdentity() && $this->zfcUserAuthentication()->getIdentity()->getRole() == "admin") {
-            $form = new CarsForm();
-            $form->get('submit')->setValue('Add');
-            $request = $this->getRequest();
-                if ($request->isPost()) {
-                $cars = new Cars();
-                $form->setInputFilter($cars->getInputFilter());
-                $form->setData($request->getPost());
-               
-                if ($form->isValid()) {
-                    $cars->exchangeArray($form->getData());                 
-                    $this->getCarsTable()->saveCars($cars);
+                if ($this->zfcUserAuthentication()->hasIdentity() && $this->zfcUserAuthentication()->getIdentity()->getRole() == "admin") {
+                    $form = new CarsForm();
+                    //$form->get('submit')->setValue('Add');
+                    $request = $this->getRequest();
+                    if ($request->isPost()) {
+                    $cars = new Cars();
+                    $form->setInputFilter($cars->getInputFilter());
+                    $form->setData($request->getPost());
+                    //var_dump($form); die;
+                            
+                    if ($form->isValid()) {
+                    //$cars->exchangeArray($form->getData());              
+                   // $this->getCarsTable()->saveCars($cars);
                     $adapter = new \Zend\File\Transfer\Adapter\Http();
-                    $dir = getcwd(). '/public/img';
-                    $data = $form->getData();
-                    $filename = $data['title'];
-                    $fileTlsName = $dir.$filename;// rabotaet
+                        if (!$adapter->isValid()){
+                             $dataError = $adapter->getMessages();
+                            foreach($dataError as $key => $row)
+                            {
+                             $errorMessage[] = $row;
+                            } echo $row;
+                                 return false;
+                            } else {     
+                                $dir = getcwd(). '/public/img/';
+                                $data = $form->getData();
+                                $filename = $data['title'];
+                                $fileTlsName = $dir.$filename;// rabotaet
+
                     $adapter->addFilter('Rename', $fileTlsName);// rename file
-                    if ($adapter->receive($fileTlsName))
+                if ($adapter->receive($fileTlsName))
                        {                                     // upload file
-                        return true; }
-                        // var_dump($adapter->receive($fileTlsName)); die;
+                        return true; } }
 
-                   
+                        $cars->exchangeArray($form->getData()); 
+                      // var_dump($cars); die;
+                        $form->setInputFilter($cars->getInputFilter());
 
 
-                    // Redirect to list of cars
+                        // Redirect to list of cars
                     return $this->redirect()->toRoute('cars');
                 }
             }
