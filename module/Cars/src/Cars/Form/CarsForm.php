@@ -46,7 +46,7 @@ class CarsForm extends Form
             'name' => 'submit',
             'attributes' => array(
                 'type'  => 'submit',
-                'value' => 'Go',
+                'value' => 'Edit',
                 'id' => 'submitbutton',
             ),
         ));
