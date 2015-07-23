@@ -18,7 +18,7 @@ class Cars implements InputFilterAwareInterface
     {
         $this->id     = (isset($data['id']))     ? $data['id']     : null;
         $this->artist = (isset($data['artist'])) ? $data['artist'] : null;
-        $this->title  = (isset($data['title']))  ? $data['title']  : null;
+        $this->title  = (array($data['title']))  ? $data['title']  : null;
     }
 
      // Add the following method:
@@ -68,6 +68,7 @@ class Cars implements InputFilterAwareInterface
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'title',
                 'required' => true,
+                
                 /*'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),

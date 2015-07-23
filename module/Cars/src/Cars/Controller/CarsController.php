@@ -37,7 +37,6 @@ class CarsController extends AbstractActionController
             $cars = new Cars();
             $form->setInputFilter($cars->getInputFilter());
             $form->setData(array_merge($request->getPost()->toArray(), $request->getFiles()->toArray()));
-//var_dump($form->isValid()); die;
             if ($form->isValid()) {
              //var_dump($form->getElement('image'));DIE;
              //$form->getElement('image')->setDestination(getcwd() . '/public/img');
@@ -56,6 +55,12 @@ class CarsController extends AbstractActionController
             }
         }
         return array('form' => $form);
+    } else {
+        $view = new ViewModel(array(
+                'message' => 'Доступ закрыт!',
+            ));
+            $view->setTemplate('cars/error/access');
+            return $view;
     }
 
     }
@@ -63,38 +68,42 @@ class CarsController extends AbstractActionController
     public function editAction()
     {
         if ($this->zfcUserAuthentication()->hasIdentity() && $this->zfcUserAuthentication()->getIdentity()->getRole() == "admin") {
-        $id = (int) $this->params()->fromRoute('id', 0);
-        if (!$id) {
-            return $this->redirect()->toRoute('cars', array(
-                'action' => 'add'
-            ));
-        }
-        $cars = $this->getCarsTable()->getCars($id);
-        $form  = new CarsForm();
-        $form->bind($cars);
+            $id = (int) $this->params()->fromRoute('id', 0);
+            if (!$id) {
+                return $this->redirect()->toRoute('cars', array(
+                    'action' => 'add'
+                ));
+         }
+         $cars = $this->getCarsTable()->getCars($id);
+         $form  = new CarsForm();
+         $form->bind($cars);
 
-        $form->get('submit')->setAttribute('value', 'Edit');
+            $form->get('submit')->setAttribute('value', 'Edit');
+            $request = $this->getRequest();
 
-        $request = $this->getRequest();
-       /*if ($request->isPost()) {   
+                if ($request->isPost()) {   
             //$cars = new Cars();
-            $form->setInputFilter($cars->getInputFilter());
-            $form->setData(array_merge($request->getPost()->toArray(), $request->getFiles()->toArray()));
-            if ($form->isValid()) {
-                //$fileName = $form->getData()['title']['tmp_name'];
+                 $form->setInputFilter($cars->getInputFilter());
+                 $form->setData(array_merge($request->getPost()->toArray(), $request->getFiles()->toArray()));
+            /*if ($form->isValid()) {
+                $fileName = $form->getData()['title']['name'];
                 print_r($form); die;
                 
                  if (move_uploaded_file($form->getData()['title']['tmp_name'], getcwd() . '/public/img/' . $fileName)) {
         echo "Файл корректен и был успешно загружен.\n";
     }
 
-                // Redirect to list of albums
+                
                 return $this->redirect()->toRoute('cars');
             }
-        } */
+        */} 
 
-        } else {
-            echo 'ERROR!!!!';
+        }  else {
+            $view = new ViewModel(array(
+                'message' => 'Доступ закрыт!',
+            ));
+            $view->setTemplate('cars/error/access');
+            return $view;
         }
 
         return array(
@@ -120,7 +129,7 @@ class CarsController extends AbstractActionController
                 $this->getCarsTable()->deleteCars($id);
             }
 
-            // Redirect to list of albums
+            // Redirect to list of cars
             return $this->redirect()->toRoute('cars');
         }
 
@@ -128,7 +137,14 @@ class CarsController extends AbstractActionController
             'id'    => $id,
             'cars' => $this->getCarsTable()->getCars($id)
         );
+    } else {
+         $view = new ViewModel(array(
+                'message' => 'Доступ закрыт!',
+            ));
+            $view->setTemplate('cars/error/access');
+            return $view;
     }
+
 }
     public function getCarsTable()
     {
