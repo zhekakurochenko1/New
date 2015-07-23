@@ -1,54 +1,7 @@
-<table>  
+<p><a href="user">Назад к профилю</a></p> 
+<p><a href="cars/pres">Слайдшоу</a></p>
 
-<tr><td>
-<div style="background: white; border: 3px solid silver; padding: 5px; text-align: center; width: 1024px;">
-<marquee height="500"  scrollamount="5" width="1000">
-<img src="img/1.jpg" height="80%" width="80%"/>
-<img src="img/2.jpg" height="80%" width="80%"/>
-<img src="img/3.jpg" height="80%" width="80%"/>
-<img src="img/4.jpg" height="80%" width="80%"/>
-<img src="img/1.jpg" height="80%" width="80%"/>
-<img src="img/2.jpg" height="80%" width="80%"/>
-<img src="img/3.jpg" height="80%" width="80%"/>
-<img src="img/4.jpg" height="80%" width="80%"/>
-<img src="img/1.jpg" height="80%" width="80%"/>
-<img src="img/2.jpg" height="80%" width="80%"/>
-<img src="img/3.jpg" height="80%" width="80%"/>
-<img src="img/4.jpg" height="80%" width="80%"/>
-<img src="img/1.jpg" height="80%" width="80%"/>
-<img src="img/2.jpg" height="80%" width="80%"/>
-<img src="img/3.jpg" height="80%" width="80%"/>
-<img src="img/4.jpg" height="80%" width="80%"/>
-<img src="img/1.jpg" height="80%" width="80%"/>
-<img src="img/2.jpg" height="80%" width="80%"/>
-<img src="img/3.jpg" height="80%" width="80%"/>
-<img src="img/4.jpg" height="80%" width="80%"/>
-<img src="img/1.jpg" height="80%" width="80%"/>
-<img src="img/2.jpg" height="80%" width="80%"/>
-<img src="img/3.jpg" height="80%" width="80%"/>
-<img src="img/4.jpg" height="80%" width="80%"/>
-<img src="img/1.jpg" height="80%" width="80%"/>
-<img src="img/2.jpg" height="80%" width="80%"/>
-<img src="img/3.jpg" height="80%" width="80%"/>
-<img src="img/4.jpg" height="80%" width="80%"/>
-<img src="img/1.jpg" height="80%" width="80%"/>
-<img src="img/2.jpg" height="80%" width="80%"/>
-<img src="img/3.jpg" height="80%" width="80%"/>
-<img src="img/4.jpg" height="80%" width="80%"/>
-<img src="img/1.jpg" height="80%" width="80%"/>
-<img src="img/2.jpg" height="80%" width="80%"/>
-<img src="img/3.jpg" height="80%" width="80%"/>
-<img src="img/4.jpg" height="80%" width="80%"/></marquee></div>
-</td></tr>
 
-</table>
-
-<?php if($this->zfcUserIdentity()) { ?>
-    <p><h3><?php echo $this->translate('Hello'); ?>, <?php echo $this->zfcUserDisplayName() ?>!</h3></p>
-    <a href="<?php echo $this->url('zfcuser/logout') ?>">[<?php echo $this->translate('Sign Out'); ?>]</a>
-    <div style="clear:both;"></div>
-
-<?php } else { echo $this->zfcUserLoginWidget(); } ?>
 <?php
 // module/Album/view/album/album/index.phtml:
 
@@ -60,7 +13,7 @@ $this->headTitle($title);
 <?php if($this->zfcUserIdentity() && $this->zfcUserIdentity()->getRole() == 'admin') { ?>
 <p>
     <a href="<?php echo $this->url('cars', array('action'=>'add'));?>">Add new car</a>
-    <p><a href="/user">Back to login</a></p> 
+    
 </p>
 <?php } ?>
 

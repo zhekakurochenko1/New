@@ -20,14 +20,25 @@ class CarsController extends AbstractActionController
 
     public function indexAction()
     {
+
         return new ViewModel(array(
        'carss' => $this->getCarsTable()->fetchAll(),
         ));
     }
 
+    public function presAction(){
+        
+        return new ViewModel(array(
+            'massage' => 'SlideShow',));
+        $view -> SetTemplate('cars/cars/pres.phtml');
+        return view;
+
+
+    }
+//-----------------
     public function addAction()
     {
-    if ($this->zfcUserAuthentication()->hasIdentity() && $this->zfcUserAuthentication()->getIdentity()->getRole() == "admin") {
+        if ($this->zfcUserAuthentication()->hasIdentity() && $this->zfcUserAuthentication()->getIdentity()->getRole() == "admin") {
         $form = new CarsForm();
         $request = $this->getRequest();
         if ($request->isPost()) {   
