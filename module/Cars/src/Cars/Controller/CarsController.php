@@ -6,6 +6,15 @@ use Zend\View\Model\ViewModel;
 use Cars\Model\Cars;
 use Cars\Form\CarsForm;
 use Zend\Validator;
+use Zend\Validator\File\Size;
+//use Zend\Mvc\Controller\AbstractActionController;
+//use Zend\View\Model\ViewModel;
+use Zend\Http\PhpEnvironment\Request;
+use Zend\Filter;
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\Input;
+use Zend\InputFilter\FileInput;
+
 
 class CarsController extends AbstractActionController
 {
@@ -22,51 +31,33 @@ class CarsController extends AbstractActionController
     public function addAction()
     {
                 if ($this->zfcUserAuthentication()->hasIdentity() && $this->zfcUserAuthentication()->getIdentity()->getRole() == "admin") {
-                    $form = new CarsForm();
-                    //$form->get('submit')->setValue('Add');
-                    $request = $this->getRequest();
-                    if ($request->isPost()) {
-                    $cars = new Cars();
-                    $form->setInputFilter($cars->getInputFilter());
-                    $form->setData($request->getPost());
-                    //var_dump($form); die;
-                            
-                    if ($form->isValid()) {
-                    //$cars->exchangeArray($form->getData());              
-                   // $this->getCarsTable()->saveCars($cars);
-                    $adapter = new \Zend\File\Transfer\Adapter\Http();
-                        if (!$adapter->isValid()){
-                             $dataError = $adapter->getMessages();
-                            foreach($dataError as $key => $row)
-                            {
-                             $errorMessage[] = $row;
-                            } echo $row;
-                                 return false;
-                            } else {     
-                                $dir = getcwd(). '/public/img/';
-                                $data = $form->getData();
-                                $filename = $data['title'];
-                                $fileTlsName = $dir.$filename;// rabotaet
+                     $form = new CarsForm();
+        $request = $this->getRequest();
+        if ($request->isPost()) {   
+            $cars = new Cars();
+            $form->setInputFilter($cars->getInputFilter());
+            $form->setData(array_merge($request->getPost()->toArray(), $request->getFiles()->toArray()));
+//var_dump($form->isValid()); die;
+            if ($form->isValid()) {
+             //var_dump($form->getElement('image'));DIE;
+             //$form->getElement('image')->setDestination(getcwd() . '/public/img');
+                $fileName = $form->getData()['title']['name'];
+                if (move_uploaded_file($form->getData()['title']['tmp_name'], getcwd() . '/public/img/' . $fileName)) {
+        echo "Файл корректен и был успешно загружен.\n";
+    } else {
+        echo "Возможная атака с помощью файловой загрузки!\n";
+    }
 
-                    $adapter->addFilter('Rename', $fileTlsName);// rename file
-                if ($adapter->receive($fileTlsName))
-                       {                                     // upload file
-                        return true; } }
-
-                        $cars->exchangeArray($form->getData()); 
-                      // var_dump($cars); die;
-                        $form->setInputFilter($cars->getInputFilter());
-
-
-                        // Redirect to list of cars
-                    return $this->redirect()->toRoute('cars');
-                }
+                $cars->exchangeArray($form->getData());
+                //print_r($product); die;
+                $this->getCarsTable()->saveCars($cars); 
+                // Redirect to list of products
+                return $this->redirect()->toRoute('cars');
             }
-            return array('form' => $form);
-        } else {
-              echo "ERROR!!!! You not admin";
-            
         }
+        return array('form' => $form);
+    }
+
     }
 
     public function editAction()

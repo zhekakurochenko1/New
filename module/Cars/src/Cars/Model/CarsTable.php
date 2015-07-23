@@ -34,7 +34,7 @@ class CarsTable
     {
         $data = array(
             'artist' => $cars->artist,
-            'title'  => $cars->title,
+            'title'  => $cars->title['name'],
         );
 
         $id = (int)$cars->id;

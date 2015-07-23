@@ -1,5 +1,5 @@
 <?php
-// module/Album/src/Album/Model/Album.php:
+
 namespace Cars\Model;
 
 use Zend\InputFilter\Factory as InputFactory;
@@ -68,7 +68,7 @@ class Cars implements InputFilterAwareInterface
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'title',
                 'required' => true,
-                'filters'  => array(
+                /*'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
                 ),
@@ -81,7 +81,7 @@ class Cars implements InputFilterAwareInterface
                             'max'      => 100,
                         ),
                     ),
-                ),
+                ),*/
             )));
 
             $this->inputFilter = $inputFilter;
