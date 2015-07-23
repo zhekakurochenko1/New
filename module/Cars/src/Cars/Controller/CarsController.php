@@ -27,8 +27,8 @@ class CarsController extends AbstractActionController
 
     public function addAction()
     {
-                if ($this->zfcUserAuthentication()->hasIdentity() && $this->zfcUserAuthentication()->getIdentity()->getRole() == "admin") {
-                     $form = new CarsForm();
+    if ($this->zfcUserAuthentication()->hasIdentity() && $this->zfcUserAuthentication()->getIdentity()->getRole() == "admin") {
+        $form = new CarsForm();
         $request = $this->getRequest();
         if ($request->isPost()) {   
             $cars = new Cars();
@@ -40,8 +40,7 @@ class CarsController extends AbstractActionController
         echo "Файл корректен и был успешно загружен.\n";
     } else {
         echo "Возможная атака с помощью файловой загрузки!\n";
-    }
-                $cars->exchangeArray($form->getData());
+    }           $cars->exchangeArray($form->getData());
                 $this->getCarsTable()->saveCars($cars); 
                 return $this->redirect()->toRoute('cars');
             }
