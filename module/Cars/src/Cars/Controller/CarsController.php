@@ -70,23 +70,28 @@ class CarsController extends AbstractActionController
             ));
         }
         $cars = $this->getCarsTable()->getCars($id);
-
         $form  = new CarsForm();
         $form->bind($cars);
+
         $form->get('submit')->setAttribute('value', 'Edit');
 
         $request = $this->getRequest();
-        if ($request->isPost()) {
+       /*if ($request->isPost()) {   
+            //$cars = new Cars();
             $form->setInputFilter($cars->getInputFilter());
-            $form->setData($request->getPost());
-
+            $form->setData(array_merge($request->getPost()->toArray(), $request->getFiles()->toArray()));
             if ($form->isValid()) {
-                $this->getCarsTable()->saveCars($form->getData());
+                //$fileName = $form->getData()['title']['tmp_name'];
+                print_r($form); die;
+                
+                 if (move_uploaded_file($form->getData()['title']['tmp_name'], getcwd() . '/public/img/' . $fileName)) {
+        echo "Файл корректен и был успешно загружен.\n";
+    }
 
                 // Redirect to list of albums
                 return $this->redirect()->toRoute('cars');
             }
-        } 
+        } */
 
         } else {
             echo 'ERROR!!!!';

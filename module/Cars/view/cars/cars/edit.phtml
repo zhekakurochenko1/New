@@ -1,5 +1,4 @@
 <?php
-// module/Album/view/album/album/edit.phtml:
 
 $title = 'Edit car';
 $this->headTitle($title);
@@ -8,10 +7,8 @@ $this->headTitle($title);
 
 <?php
 $form = $this->form;
-$form->setAttribute('action', $this->url(
-    'cars',
-    array(
-        'action' => 'edit',
+$form->setAttribute('action', $this->url('cars', array(
+        'action' => 'add',
         'id'     => $this->id,
     )
 ));
