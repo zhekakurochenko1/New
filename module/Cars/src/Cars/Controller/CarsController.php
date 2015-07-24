@@ -29,9 +29,9 @@ class CarsController extends AbstractActionController
     public function presAction(){
         
         return new ViewModel(array(
-            'massage' => 'SlideShow',));
+            'carss' => $this->getCarsTable()->fetchAll()));
         $view -> SetTemplate('cars/cars/pres.phtml');
-        return view;
+        //return view;
 
 
     }
@@ -79,7 +79,7 @@ class CarsController extends AbstractActionController
          $cars = $this->getCarsTable()->getCars($id);
          $form  = new CarsForm();
          $form->bind($cars);
-         $request = $this->getRequest();
+         
         }  else {
             $view = new ViewModel(array(
             'message' => 'Доступ закрыт!',
